@@ -1,0 +1,107 @@
+1 - Criação do projeto
+ionic start MeuAppBarbearia tabs -a "SysBarbearia" -i "br.com.site"
+
+2 - Instalação do HttpClientModule
+
+dentro de app.module.ts
+import { HttpClientModule,HttpClient } from '@angular/common/http';
+
+  imports: [
+    AppRoutingModule --adicionar
+  ],
+
+  providers: [
+    HttpClient --adicionar
+  ],
+
+3 - Iniciar o projeto
+C:\GitHub\MeuAppBarbearia>ionic serve
+
+4 - Comanda para criar page, service, class
+ionic g page services/service-list
+ionic g service services/shared/service
+ionic g class services/shared/service
+
+5 - dentro de tab / tabs-routing.module
+fiz a alteração do tab1 para o service:
+
+
+const routes: Routes = [
+  {
+    path: 'tabs',
+    component: TabsPage,
+    children: [
+      {
+        path: 'services',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../services/service-list/service-list.module').then(m => m.ServiceListPageModule)
+          }
+        ]
+      },
+      {
+        path: 'tab2',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../tab2/tab2.module').then(m => m.Tab2PageModule)
+          }
+        ]
+      },
+      {
+        path: 'tab3',
+        children: [
+          {
+            path: '',
+            loadChildren: () =>
+              import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+          }
+        ]
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/services',
+        pathMatch: 'full'
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: '/tabs/services',
+    pathMatch: 'full'
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class TabsPageRoutingModule {}
+
+6 - Alteração do tabs.page.html
+
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="services">
+      <ion-icon name="list"></ion-icon>
+      <ion-label>Serviços</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab2">
+      <ion-icon name="apps"></ion-icon>
+      <ion-label>Tab Two</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="tab3">
+      <ion-icon name="send"></ion-icon>
+      <ion-label>Tab Three</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>
+
+
