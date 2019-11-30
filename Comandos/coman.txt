@@ -104,4 +104,8 @@ export class TabsPageRoutingModule {}
 
 </ion-tabs>
 
+6 - Instalação do Ionic/lab
+npm i @ionic/lab --save
+ionic serve --lab
+
 
